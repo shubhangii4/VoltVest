@@ -80,7 +80,10 @@ public class VoltApiServiceImpl implements VoltApiService {
         );
 
         logger.info("OTP initiated successfully for leadId: {}", request.getLeadId());
-        return otpResponse.getBody();
+        InitiateOtpResponse initiateOtpResponse =  otpResponse.getBody();
+        initiateOtpResponse.setLeadID(request.getLeadId());
+
+        return initiateOtpResponse;
     }
 
     @Override

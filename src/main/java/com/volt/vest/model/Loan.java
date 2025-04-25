@@ -1,9 +1,9 @@
 package com.volt.vest.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import lombok.Data;
 
 @Data
 public class Loan {
@@ -14,4 +14,4 @@ public class Loan {
     private LocalDate endDate;
     private BigDecimal totalInterestPaid;
     private BigDecimal totalAmountPaid;
-} 
+}

@@ -1,14 +1,26 @@
 package com.volt.vest.controller;
 
-import com.volt.vest.dto.portfolio.PortfolioComparisonRequest;
-import com.volt.vest.dto.portfolio.PortfolioComparisonResponse;
-import com.volt.vest.model.*;
-import com.volt.vest.dto.portfolio.PortfolioResponse;
-import com.volt.vest.service.VoltApiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.volt.vest.dto.portfolio.PortfolioComparisonRequest;
+import com.volt.vest.dto.portfolio.PortfolioComparisonResponse;
+import com.volt.vest.model.CreateLeadRequest;
+import com.volt.vest.model.CreateLeadResponse;
+import com.volt.vest.model.CreateOtpRequest;
+import com.volt.vest.model.InitiateOtpRequest;
+import com.volt.vest.model.InitiateOtpResponse;
+import com.volt.vest.model.VerifyOtpRequest;
+import com.volt.vest.model.VerifyOtpResponse;
+import com.volt.vest.service.VoltApiService;
 
 @RestController
 @RequestMapping("/api/volt")
@@ -22,12 +34,14 @@ public class VoltApiController {
         logger.info("VoltApiController initialized with service: {}", voltApiService);
     }
 
+    @CrossOrigin
     @GetMapping("/test")
     public ResponseEntity<String> test() {
         logger.info("Test endpoint hit");
         return ResponseEntity.ok("Test endpoint working!");
     }
 
+    @CrossOrigin
     @PostMapping("/otp/initiate")
     public ResponseEntity<InitiateOtpResponse> intiateOtp(@RequestBody CreateOtpRequest request) {
         logger.info("Received lead creation request: {}", request);
@@ -51,14 +65,15 @@ public class VoltApiController {
         return ResponseEntity.ok(otpResponse);
     }
 
+    @CrossOrigin
     @PostMapping("/otp/verify")
-    public ResponseEntity<VerifyOtpResponse> verifyOtp(@RequestBody VerifyOtpRequest request) {
-        return ResponseEntity.ok(voltApiService.verifyOtp(request));
+    public ResponseEntity<String> verifyOtp(@RequestBody VerifyOtpRequest request) {
+        return ResponseEntity.ok(voltApiService.verifyOtp(request).getJwt());
     }
 
+    @CrossOrigin
     @PostMapping("/portfolio")
-    public ResponseEntity<PortfolioComparisonResponse> getPortfolio(@RequestBody PortfolioComparisonRequest request,
-                                                                    @RequestHeader("Authorization") String jwtToken) {
+    public ResponseEntity<PortfolioComparisonResponse> getPortfolio(@RequestBody PortfolioComparisonRequest request) {
         return ResponseEntity.ok(voltApiService.getAndComparePortfolio(request));
     }
 

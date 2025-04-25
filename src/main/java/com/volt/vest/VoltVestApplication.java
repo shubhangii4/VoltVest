@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.volt.vest")
 public class VoltVestApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(VoltVestApplication.class);

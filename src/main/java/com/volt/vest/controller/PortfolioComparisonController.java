@@ -44,16 +44,4 @@ public class PortfolioComparisonController {
 //            BigDecimal.valueOf(12.0)   // Fixed expected annual return
 //        );
 //    }
-
-    public BigDecimal calculateTotalPortfolioValue(PortfolioResponse portfolioResponse) {
-        if (portfolioResponse == null || 
-            portfolioResponse.getOverallSummary() == null || 
-            portfolioResponse.getOverallSummary().getTotalFundsSummary() == null) {
-            return BigDecimal.ZERO;
-        }
-
-        Map<String, BigDecimal> totalFundsSummary = portfolioResponse.getOverallSummary().getTotalFundsSummary();
-        return totalFundsSummary.values().stream()
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
 } 

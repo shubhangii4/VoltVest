@@ -1,11 +1,13 @@
 package com.volt.vest.service.impl;
 
 import com.volt.vest.dto.portfolio.PortfolioComparisonResponse;
+import com.volt.vest.dto.portfolio.PortfolioResponse;
 import com.volt.vest.service.PortfolioComparisonService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Map;
 
 @Service
 public class PortfolioComparisonServiceImpl implements PortfolioComparisonService {
@@ -74,5 +76,18 @@ public class PortfolioComparisonServiceImpl implements PortfolioComparisonServic
         BigDecimal rate = annualInterestRate.divide(BigDecimal.valueOf(100), 10, RoundingMode.HALF_UP);
         BigDecimal interest = principal.multiply(rate).multiply(BigDecimal.valueOf(years));
         return principal.add(interest).setScale(2, RoundingMode.HALF_UP);
+    }
+
+
+    public BigDecimal calculateTotalPortfolioValue(PortfolioResponse portfolioResponse) {
+        if (portfolioResponse == null ||
+                portfolioResponse.getOverallSummary() == null ||
+                portfolioResponse.getOverallSummary().getTotalFundsSummary() == null) {
+            return BigDecimal.ZERO;
+        }
+
+        Map<String, BigDecimal> totalFundsSummary = portfolioResponse.getOverallSummary().getTotalFundsSummary();
+        return totalFundsSummary.values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 } 

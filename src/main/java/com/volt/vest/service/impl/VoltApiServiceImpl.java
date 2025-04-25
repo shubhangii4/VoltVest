@@ -30,15 +30,11 @@ public class VoltApiServiceImpl implements VoltApiService {
     private String baseUrl;
 
     @Autowired
-    private final PortfolioComparisonController portfolioComparisonController;
-
-    @Autowired
-    private final PortfolioComparisonService portfolioComparisonService;
+    private PortfolioComparisonService portfolioComparisonService;
 
     private final RestTemplate restTemplate;
 
-    public VoltApiServiceImpl(PortfolioComparisonController portfolioComparisonController, PortfolioComparisonService portfolioComparisonService, RestTemplate restTemplate) {
-        this.portfolioComparisonController = portfolioComparisonController;
+    public VoltApiServiceImpl(PortfolioComparisonService portfolioComparisonService, RestTemplate restTemplate) {
         this.portfolioComparisonService = portfolioComparisonService;
         this.restTemplate = restTemplate;
     }
@@ -140,7 +136,7 @@ public class VoltApiServiceImpl implements VoltApiService {
         }
 
 //        return portfolioResponse;
-        BigDecimal currentPortfolioValue = portfolioComparisonController.calculateTotalPortfolioValue(portfolioResponse);
+        BigDecimal currentPortfolioValue = portfolioComparisonService.calculateTotalPortfolioValue(portfolioResponse);
 
         // Compare scenarios with fixed interest rate and expected return
         return portfolioComparisonService.comparePortfolioScenarios(

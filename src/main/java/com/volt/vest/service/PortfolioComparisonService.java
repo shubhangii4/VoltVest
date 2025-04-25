@@ -1,6 +1,8 @@
 package com.volt.vest.service;
 
 import com.volt.vest.dto.portfolio.PortfolioComparisonResponse;
+import com.volt.vest.dto.portfolio.PortfolioResponse;
+
 import java.math.BigDecimal;
 
 public interface PortfolioComparisonService {
@@ -11,4 +13,6 @@ public interface PortfolioComparisonService {
         Integer loanTenureYears,
         BigDecimal expectedAnnualReturn
     );
+
+    BigDecimal calculateTotalPortfolioValue(PortfolioResponse portfolioResponse);
 } 

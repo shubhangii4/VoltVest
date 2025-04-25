@@ -148,7 +148,7 @@ public class VoltApiServiceImpl implements VoltApiService {
                 request.getDesiredLoanAmount(),
                 BigDecimal.valueOf(10.49), // Fixed interest rate
                 request.getLoanTenureYears(),
-                BigDecimal.valueOf(12.0)   // Fixed expected annual return
+                BigDecimal.valueOf(15.0)   // Fixed expected annual return
         );
     }
 

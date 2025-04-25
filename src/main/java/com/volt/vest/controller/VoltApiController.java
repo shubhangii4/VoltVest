@@ -62,33 +62,33 @@ public class VoltApiController {
         return ResponseEntity.ok(voltApiService.getAndComparePortfolio(request));
     }
 
-    @PostMapping("/complete-flow")
-    public ResponseEntity<PortfolioResponse> completeFlow(
-            @RequestBody CreateLeadRequest createLeadRequest,
-            @RequestParam String otp) {
-        
-        // Step 1: Create Lead
-        CreateLeadResponse leadResponse = voltApiService.createLead(createLeadRequest);
-        
-        // Step 2: Initiate OTP
-        InitiateOtpRequest initiateOtpRequest = new InitiateOtpRequest();
-        initiateOtpRequest.setLeadId(leadResponse.getLeadId());
-        InitiateOtpResponse otpResponse = voltApiService.initiateOtp(initiateOtpRequest);
-        
-        // Step 3: Verify OTP
-        VerifyOtpRequest verifyOtpRequest = new VerifyOtpRequest();
-        verifyOtpRequest.setLeadId(leadResponse.getLeadId());
-        verifyOtpRequest.setOtp(otp);
-        verifyOtpRequest.setOtpRef(otpResponse.getOtpRef());
-        verifyOtpRequest.setClientRefNo(otpResponse.getClientRefNo());
-        verifyOtpRequest.setReqId(otpResponse.getReqId());
-        VerifyOtpResponse verifyResponse = voltApiService.verifyOtp(verifyOtpRequest);
-        
-        if (!"Success".equals(verifyResponse.getStatus())) {
-            throw new RuntimeException("OTP verification failed: " + verifyResponse.getMessage());
-        }
-        
-        // Step 4: Get Portfolio
-        return ResponseEntity.ok(voltApiService.getAndComparePortfolio(verifyResponse.getJwt()));
-    }
+//    @PostMapping("/complete-flow")
+//    public ResponseEntity<PortfolioResponse> completeFlow(
+//            @RequestBody CreateLeadRequest createLeadRequest,
+//            @RequestParam String otp) {
+//
+//        // Step 1: Create Lead
+//        CreateLeadResponse leadResponse = voltApiService.createLead(createLeadRequest);
+//
+//        // Step 2: Initiate OTP
+//        InitiateOtpRequest initiateOtpRequest = new InitiateOtpRequest();
+//        initiateOtpRequest.setLeadId(leadResponse.getLeadId());
+//        InitiateOtpResponse otpResponse = voltApiService.initiateOtp(initiateOtpRequest);
+//
+//        // Step 3: Verify OTP
+//        VerifyOtpRequest verifyOtpRequest = new VerifyOtpRequest();
+//        verifyOtpRequest.setLeadId(leadResponse.getLeadId());
+//        verifyOtpRequest.setOtp(otp);
+//        verifyOtpRequest.setOtpRef(otpResponse.getOtpRef());
+//        verifyOtpRequest.setClientRefNo(otpResponse.getClientRefNo());
+//        verifyOtpRequest.setReqId(otpResponse.getReqId());
+//        VerifyOtpResponse verifyResponse = voltApiService.verifyOtp(verifyOtpRequest);
+//
+//        if (!"Success".equals(verifyResponse.getStatus())) {
+//            throw new RuntimeException("OTP verification failed: " + verifyResponse.getMessage());
+//        }
+//
+//        // Step 4: Get Portfolio
+////        return ResponseEntity.ok(voltApiService.getAndComparePortfolio(verifyResponse.getJwt()));
+//    }
 } 

@@ -27,23 +27,23 @@ public class PortfolioComparisonController {
         this.voltApiService = voltApiService;
     }
 
-    @PostMapping("/compare")
-    public PortfolioComparisonResponse getAndComparePortfolio(@RequestBody PortfolioComparisonRequest request) {
-        // Get portfolio using JWT token
-        PortfolioResponse portfolioResponse = voltApiService.getPortfolio(request.getJwtToken());
-        
-        // Calculate current portfolio value from totalFundsSummary
-        BigDecimal currentPortfolioValue = calculateTotalPortfolioValue(portfolioResponse);
-        
-        // Compare scenarios with fixed interest rate and expected return
-        return portfolioComparisonService.comparePortfolioScenarios(
-            currentPortfolioValue,
-            request.getDesiredLoanAmount(),
-            BigDecimal.valueOf(10.49), // Fixed interest rate
-            request.getLoanTenureYears(),
-            BigDecimal.valueOf(12.0)   // Fixed expected annual return
-        );
-    }
+//    @PostMapping("/compare")
+//    public PortfolioComparisonResponse getAndComparePortfolio(@RequestBody PortfolioComparisonRequest request) {
+//        // Get portfolio using JWT token
+//        PortfolioResponse portfolioResponse = voltApiService.getPortfolio(request.getJwtToken());
+//
+//        // Calculate current portfolio value from totalFundsSummary
+//        BigDecimal currentPortfolioValue = calculateTotalPortfolioValue(portfolioResponse);
+//
+//        // Compare scenarios with fixed interest rate and expected return
+//        return portfolioComparisonService.comparePortfolioScenarios(
+//            currentPortfolioValue,
+//            request.getDesiredLoanAmount(),
+//            BigDecimal.valueOf(10.49), // Fixed interest rate
+//            request.getLoanTenureYears(),
+//            BigDecimal.valueOf(12.0)   // Fixed expected annual return
+//        );
+//    }
 
     public BigDecimal calculateTotalPortfolioValue(PortfolioResponse portfolioResponse) {
         if (portfolioResponse == null || 

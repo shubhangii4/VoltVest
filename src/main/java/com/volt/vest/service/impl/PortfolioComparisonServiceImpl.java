@@ -47,8 +47,7 @@ public class PortfolioComparisonServiceImpl implements PortfolioComparisonServic
             expectedAnnualReturn,
             loanTenureYears
         );
-        BigDecimal finalValueWithLoan = finalPortfolioValue.subtract(totalRepaymentAmount);
-        response.setFutureAmountIfLoanTaken(finalValueWithLoan);
+        response.setFutureAmountIfLoanTaken(finalPortfolioValue);
 
         return response;
     }
